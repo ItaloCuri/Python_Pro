@@ -1,4 +1,5 @@
 import discord  # Librería oficial de Discord para interactuar con su API
+import random #Liberia Oficial de Python para colocar algo al azar
 from discord.ext import commands  # Módulo que facilita la creación de comandos para el bot
 
 # 🔹 Configuración de los permisos del bot
@@ -39,7 +40,7 @@ async def saludo(ctx, *, mensaje: str):
     # Comprobamos si el mensaje contiene ciertas palabras clave
     if "hola" in mensaje:
         await ctx.send("¡Hola! ¿Cómo estás? 😊")
-    elif "adiós" in mensaje:
+    elif "adiós" or "adios" in mensaje:
         await ctx.send("¡Hasta luego! 👋")
     elif "gracias" in mensaje:
         await ctx.send("¡De nada! 😃")
@@ -67,7 +68,7 @@ async def emocion(ctx, *, mensaje: str):
 # 🔹 Token del bot (IMPORTANTE: No compartir con nadie)
 # El token es como la "contraseña" del bot, necesaria para conectarlo a Discord.
 
-token = "pon_tu_token_aqui"
+token = '###############################'
 
 # 🔹 Iniciar el bot
 # Esta línea conecta el bot a Discord y lo mantiene en ejecución.
@@ -100,5 +101,90 @@ async def div(ctx, left: int, right: int):
 async def min(ctx, left: int, right: int):
     #"""min two numbers together."""
     await ctx.send(left - right)
+
+
+@bot.command()
+async def mem(ctx):
+    
+    with open('imagen/mem1.jpeg', 'rb') as f:
+        # ¡Vamos a almacenar el archivo de la biblioteca Discord convertido en esta variable!
+        picture = discord.File(f)
+    # A continuación, podemos enviar este archivo como parámetro.
+    await ctx.send(file=picture)
+    
+# como listar archivos dentro de una carpeta.
+import os  
+
+# Importamos la librería 'random' que nos ayuda a elegir elementos al azar,
+# en este caso, seleccionará una imagen aleatoria de una carpeta.
+import random   
+
+# Definimos un comando en nuestro bot con @bot.command()
+# Cuando un usuario escriba !meme_aleatorio en el chat de Discord, el bot ejecutará esta función.
+@bot.command()
+async def meme_aleatorio(ctx):  
+    """
+    Esta función elige una imagen aleatoria de la carpeta 'imagenes'
+    y la envía al canal de Discord cuando el usuario escribe !meme_aleatorio.
+    ctx representa el contexto del comando, es decir, información sobre quién ejecutó el comando
+    y en qué canal se ejecutó.
+    """
+
+    # Usamos os.listdir('imagenes') para obtener una lista con todos los nombres de archivos
+    # que hay dentro de la carpeta 'imagenes'.
+    # Luego, usamos random.choice() para elegir aleatoriamente uno de esos archivos.
+    img_name = random.choice(os.listdir('imagen'))  
+
+    # Abrimos el archivo de imagen seleccionado en modo lectura binaria ('rb').
+    # 'f'imagenes/{img_name}' permite construir la ruta del archivo dinámicamente,
+    # reemplazando {img_name} con el nombre de la imagen seleccionada.
+    with open(f'imagen/{img_name}', 'rb') as f:  
+        picture = discord.File(f)  # Creamos un objeto de tipo File que representa la imagen.
+
+    # Enviamos la imagen al canal donde se escribió el comando.
+    # 'await' se usa porque enviar un archivo es una tarea asíncrona,
+    # lo que significa que el bot puede seguir funcionando sin bloquearse.
+    await ctx.send(file=picture) 
+    
+    
+
+import requests  
+
+# Definimos una función para obtener la URL de una imagen de pato aleatoria.
+def obtener_imagen_pato():    
+    """
+    Esta función se conecta a una API que devuelve imágenes aleatorias de patos.
+    Retorna la URL de la imagen para que el bot la pueda enviar.
+    """
+
+    # URL de la API que nos da imágenes aleatorias de patos.
+    url = 'https://random-d.uk/api/random'
+
+    # Hacemos una solicitud GET a la API para obtener información.
+    respuesta = requests.get(url)
+
+    # Convertimos la respuesta de la API en un diccionario de Python.
+    datos = respuesta.json()  
+
+    # Extraemos la URL de la imagen del diccionario y la retornamos.
+    return datos['url']
+
+
+# Definimos un comando en nuestro bot con @bot.command()
+# Cuando un usuario escriba !pato en el chat de Discord, el bot ejecutará esta función.
+@bot.command(name='pato')  # Cambiamos el nombre del comando a 'pato' para mantener la coherencia.
+async def enviar_pato(ctx):  
+    """
+    Esta función obtiene una imagen aleatoria de un pato y la envía al canal de Discord.
+    Se activa cuando un usuario escribe !pato en el chat.
+    """
+
+    # Llamamos a la función 'obtener_imagen_pato' para obtener la URL de la imagen.
+    url_imagen = obtener_imagen_pato()  
+
+    # Enviamos la imagen al canal donde se escribió el comando.
+    # 'await' es necesario porque ctx.send() es una función asíncrona,
+    # lo que significa que el bot espera a que se complete antes de continuar con otras tareas.
+    await ctx.send(url_imagen)
 
 bot.run(token)
