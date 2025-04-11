@@ -2,6 +2,14 @@ import discord  # Librería oficial de Discord para interactuar con su API
 import random #Liberia Oficial de Python para colocar algo al azar
 from discord.ext import commands  # Módulo que facilita la creación de comandos para el bot
 
+Ideas = [
+    "Plantar un árbol en tu barrio",
+    "Reciclar papel y plástico en casa",
+    "Apagar las luces cuando no se usan",
+    "Hacer una campaña para limpiar un parque",
+    "Enseñar a otros a cuidar el planeta"
+]
+
 # 🔹 Configuración de los permisos del bot
 # "Intents" son permisos especiales que permiten al bot acceder a ciertos eventos en Discord.
 # Por ejemplo, leer mensajes, ver usuarios en línea, etc.
@@ -68,7 +76,7 @@ async def emocion(ctx, *, mensaje: str):
 # 🔹 Token del bot (IMPORTANTE: No compartir con nadie)
 # El token es como la "contraseña" del bot, necesaria para conectarlo a Discord.
 
-token = '###############################'
+token = '########################' #pon aca tu token
 
 # 🔹 Iniciar el bot
 # Esta línea conecta el bot a Discord y lo mantiene en ejecución.
@@ -186,5 +194,15 @@ async def enviar_pato(ctx):
     # 'await' es necesario porque ctx.send() es una función asíncrona,
     # lo que significa que el bot espera a que se complete antes de continuar con otras tareas.
     await ctx.send(url_imagen)
+
+@bot.command(name="idea")
+async def idea(ctx, *, mensaje: str):
+    mensaje = mensaje.lower().strip()
+
+    if "ambiental" in mensaje:
+        idea_aleatoria = random.choice(Ideas)
+        await ctx.send(f"🌿 Idea ambiental: {idea_aleatoria}")
+    else:
+        await ctx.send("¿Querías una idea ambiental? Escribe: `$idea ambiental` 🌎")
 
 bot.run(token)
