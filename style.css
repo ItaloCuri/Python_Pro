@@ -1,0 +1,73 @@
+body{
+    background-color: rgb(24, 24, 24);
+}
+h1{
+    color: rgb(206, 206, 206);
+    text-align: left;
+    font-size: 50px;
+    font-family: 'Courier New', Courier, monospace;
+}
+h2{
+    color: rgb(212, 212, 212);
+    text-align: center;
+    font-size: 30px;
+    font-family: 'Courier New', Courier, monospace;
+}
+h3{
+    color: rgb(212, 212, 212);
+    text-align: right;
+    font-size: 30px;
+    font-family: 'Courier New', Courier, monospace;
+}
+p{
+    color: rgb(255, 255, 255);
+    text-align: left;
+    font-size: 20px;
+    font-family: 'Courier New', Courier, monospace;
+}
+p2{
+    color: rgb(255, 255, 255);
+    text-align: left;
+    font-size: 20px;
+    font-family: 'Courier New', Courier, monospace;
+}
+p3{
+    color: rgb(255, 255, 255);
+    text-align: left;
+    font-size: 20px;
+    font-family: 'Courier New', Courier, monospace;
+}
+li{
+    color: rgb(255, 255, 255);
+    text-align: left;
+    font-size: 20px;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+@keyframes cambio-color {  
+    0% {  
+        color: rgb(255, 255, 255);
+        background-color: rgb(0, 0, 0); /* Al inicio de la animación (0%), el color será azul. */
+    }  
+    50% {  
+        color: rgb(0, 0, 0);
+        background-color: rgb(255, 255, 255);  /* A la mitad de la animación (50%), el color cambiará a rojo. */
+    }  
+    100% {  
+        color: rgb(255, 255, 255);
+        background-color: rgb(0, 0, 0);  /* Al final de la animación (100%), el color volverá a ser azul. */
+    }  
+}
+/* Aplicamos la animación a todos los elementos <h1>. */
+p2 {  
+    animation: cambio-color 3s infinite;  
+    /* 'cambio-color' es el nombre de la animación definida antes.
+    '3s' significa que la animación dura 3 segundos.
+       'infinite' significa que se repetirá para siempre sin detenerse. */
+}
+p3:hover{
+    
+    color : rgb(255, 0, 0);
+    background-color: rgba(255, 255, 255, 0.514);
+    text-align: center;
+}
